@@ -4,12 +4,18 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import RecipeDetails from "./pages/RecipeDetails";
 import RecipesList from "./pages/RecipesList";
+import LoginControlled from "./pages/LoginControlled";
+import LoginUncontrolled from "./pages/LoginUncontrolled";
+import LoginRHF from "./pages/LoginRHF";
 import About from "./pages/About";
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="login/controlled" element={<LoginControlled />} />
+<Route path="login/uncontrolled" element={<LoginUncontrolled />} />
+<Route path="login/rhf" element={<LoginRHF />} />
         <Route path="recipes/:id" element={<RecipeDetails />} />
         <Route path="recipes" element={<RecipesList />} />
         <Route path="*" element={<NotFound />} />
