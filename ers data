@@ -1,0 +1,18 @@
+[33m4c15be5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/login-forms[m[33m)[m remove old login files
+[33m5730a05[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #3 from Nava-Slutzkin/feature/about-page
+[33m2ae0e3f[m[33m ([m[1;31morigin/feature/about-page[m[33m)[m show recipes total on about page
+[33me9278eb[m add about page, route and nav link
+[33m0e30eed[m refactor login components to use useId for unique input IDs
+[33m2ca07ab[m add login functionality with controlled, uncontrolled, and React Hook Form methods
+[33m4d9fc15[m add user authentication service and user data
+[33mdaa2e13[m Merge pull request #2 from Nava-Slutzkin/feature/recipe-details
+[33mce2a313[m[33m ([m[1;31morigin/feature/recipe-details[m[33m)[m Merge branch 'main' into feature/recipe-details
+[33mab7ec45[m Merge pull request #1 from Nava-Slutzkin/feature/recipes-list
+[33mf743cfb[m add back and next links
+[33m5194060[m load and show recipe details
+[33mfa241da[m add recipe details component and route
+[33m7e267b6[m add recipe details component and route
+[33m8843bd8[m add search with useSearchParams
+[33m19d4520[m load and show recipes list
+[33m5a40ed5[m add recipes list component and route
+[33mc3f99b7[m Initial commit

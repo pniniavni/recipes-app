@@ -1,74 +1,59 @@
+import { useState, useId } from "react";
+import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
-import { useId, useState } from "react";
+import { joiResolver } from "@hookform/resolvers/joi";
 import { login } from "../services/auth";
+import { loginSchema } from "../utils/schema";
 
 export default function LoginRHF() {
+  const navigate = useNavigate();
   const emailId = useId();
   const passwordId = useId();
-  const [message, setMessage] = useState("");
+  const [generalError, setGeneralError] = useState("");
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+    formState: { errors, touchedFields },
+  } = useForm({
+    resolver: joiResolver(loginSchema),
+    mode: "onTouched",
+    defaultValues: { email: "chef@recipes.com", password: "" },
+  });
 
-  const onSubmit = (data) => {
+  function onSubmit(data) {
     const user = login(data);
-
-    if (user) {
-      setMessage(`שלום ${user.name}! התחברת בהצלחה.`);
-      reset();
+    if (!user) {
+      setGeneralError("אימייל או סיסמא שגויים");
       return;
     }
-
-    setMessage("הפרטים שגויים. נסו שוב.");
-  };
+    setGeneralError("");
+    navigate("/recipes");
+  }
 
   return (
-    <div>
-      <h2>כניסה עם React Hook Form</h2>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <h1>React Hook Form</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor={emailId}>אימייל:</label><br />
-          <input
-            id={emailId}
-            type="email"
-            {...register("email", {
-              required: "שדה אימייל חובה",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "כתובת אימייל לא תקינה",
-              },
-            })}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
+      <div>
+        <label htmlFor={emailId}>אימייל</label>
+        <input id={emailId} type="text" {...register("email")} />
+        {touchedFields.email && errors.email && (
+          <p style={{ color: "red" }}>{errors.email.message}</p>
+        )}
+      </div>
 
-        <div>
-          <label htmlFor={passwordId}>סיסמה:</label><br />
-          <input
-            id={passwordId}
-            type="password"
-            {...register("password", {
-              required: "שדה סיסמה חובה",
-              minLength: {
-                value: 6,
-                message: "הסיסמה חייבת להכיל לפחות 6 תווים",
-              },
-            })}
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
+      <div>
+        <label htmlFor={passwordId}>סיסמא</label>
+        <input id={passwordId} type="password" {...register("password")} />
+        {touchedFields.password && errors.password && (
+          <p style={{ color: "red" }}>{errors.password.message}</p>
+        )}
+      </div>
 
-        <button type="submit">התחבר</button>
-      </form>
+      {generalError && <p style={{ color: "red" }}>{generalError}</p>}
 
-      {message && <p>{message}</p>}
-      <Link to="/">חזרה לעמוד הבית</Link>
-    </div>
+      <button type="submit">התחברי</button>
+    </form>
   );
 }
